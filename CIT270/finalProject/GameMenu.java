@@ -32,7 +32,7 @@ public class GameMenu extends JPanel implements ActionListener {
         menuPanel.setVisible(true);
 
         easyButton.addActionListener(this);
-        mediumButton.addActionListener(this);
+        mediumButton.addActionListener(this); 
         hardButton.addActionListener(this);
 
         add(menuPanel);
@@ -40,7 +40,7 @@ public class GameMenu extends JPanel implements ActionListener {
 
     @Override
 public void actionPerformed(ActionEvent e){
-    flip.mainPanel.removeAll(); // Clear the main panel
+    flip.clearPanel(); // Clear the main panel
     if(e.getSource() == easyButton){
         flip.toEasyGame(flip);
     }else if(e.getSource() == mediumButton){

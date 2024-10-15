@@ -1,22 +1,23 @@
 package finalProject;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 import javax.swing.*;
 
     public class GameGUI extends JFrame{
     protected JPanel mainPanel;
-    protected static final int DEFAULT_WIDTH = 600;
-    protected static final int DEFAULT_HEIGHT = 600;
+    protected static final int DEFAULT_WIDTH = 800;
+    protected static final int DEFAULT_HEIGHT = 800;
     protected EasyGame easyGame;
     protected GameMenu gameMenu;
     protected JFrame mainFrame;
+    protected String[] imagePathArray = {"\\CardSprites\\star.jpg"};
 
     public GameGUI(){
         //initialize frame
         initializeFrame();
+        ImageCache.preloadImages(imagePathArray);
     }
 
     public static void main(String[] args) {
@@ -38,6 +39,7 @@ import javax.swing.*;
         mainFrame.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         mainFrame.setVisible(true);
         mainFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        mainFrame.setResizable(false);
         toGameMenu(this);
 }
 
@@ -46,7 +48,7 @@ import javax.swing.*;
     }
     public void toEasyGame(GameGUI flip){
        // exitPanel();
-        mainPanel.add(new EasyGame(flip));
+        mainPanel.add(new EasyGame(flip, 4, 4));
         updatePanel(mainPanel);
     }
     public void toMediumGame(GameGUI flip){
@@ -55,8 +57,8 @@ import javax.swing.*;
     public void toHardGame(GameGUI flip){
         mainFrame.add(new HardGame(flip), BorderLayout.CENTER);
     }
-    public void exitPanel(){
-        mainFrame.removeAll();
+    public void clearPanel(){
+        mainPanel.removeAll();
     }
     public void updatePanel(JPanel panel){
         panel.revalidate(); // Refresh the main panel
