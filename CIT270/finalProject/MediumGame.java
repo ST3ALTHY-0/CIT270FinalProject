@@ -1,25 +1,18 @@
 package finalProject;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+    //TODO: add extra stuff here that will make the game more difficult
 
 public class MediumGame extends Game{
 
     
-    public MediumGame(GameGUI filp){
-        super("title", 4, 4, filp);
+    public MediumGame(GameGUI flip){
+        super("title", flip, 5, 4);
+        delay = 1500;
+        initializeBoardPanel();
+        initializeBoardWithCards();
     }
 
-    public void actionPerformed(ActionEvent e){
 
-    }
-
-    @Override
-    void initializeBoardWithCards() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initializeBoardWithCards'");
-    }
+  
     
 }

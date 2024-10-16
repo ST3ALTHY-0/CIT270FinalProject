@@ -3,7 +3,6 @@ package finalProject;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -11,12 +10,14 @@ public class GameMenu extends JPanel implements ActionListener {
     private JButton easyButton;
     private JButton mediumButton;
     private JButton hardButton;
-    private JPanel menuPanel;
     private GameGUI flip;
 
     public GameMenu(GameGUI flip){
         this.flip = flip;
-        menuPanel = new JPanel();
+        initializeMenu();
+    }
+    //add buttons to panel
+    private void initializeMenu(){
         easyButton = new JButton("Easy");
         mediumButton = new JButton("Medium");
         hardButton = new JButton("Hard");
@@ -26,16 +27,14 @@ public class GameMenu extends JPanel implements ActionListener {
         mediumButton.setBackground(Color.YELLOW);
         hardButton.setBackground(Color.RED);
 
-        menuPanel.add(easyButton);
-        menuPanel.add(mediumButton);
-        menuPanel.add(hardButton);
-        menuPanel.setVisible(true);
+        add(easyButton);
+        add(mediumButton);
+        add(hardButton);
+        setVisible(true);
 
         easyButton.addActionListener(this);
         mediumButton.addActionListener(this); 
         hardButton.addActionListener(this);
-
-        add(menuPanel);
     }
 
     @Override
