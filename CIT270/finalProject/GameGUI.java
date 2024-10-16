@@ -7,6 +7,11 @@ import java.util.ArrayList;
 //TODO: right now in many of the classes I have just set the fields and methods to protected,
 //TODO: but many of these should be changed to private or public as needed. [abstraction is an important part of java]
 
+//TODO: I also like the idea of making a highscore board, can maybe get practice implimenting an API that keeps track
+//TODO: of all the scores gotten by anyone who has played the game and maybe display like the top 10 somewhere in the game 
+
+//TODO: Add some sounds, when you flip over matching pair, non matching pair, you finish the game, etc
+
 public class GameGUI extends JFrame {// could make it not extend JFrame by declaring and initializing a JFrame in the
                                      // initializeFrame()
     protected static final int DEFAULT_WIDTH = 800;
@@ -72,6 +77,10 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
         setResizable(false);
         toGameMenu(this);
     }
+
+    // TODO: add class and method for highscore screen(will also need a server class
+    // to run on a local machine, and some type of Database class that uses a API to
+    // communicate with that server)
 
     // TODO: add class and method for end game screen
 

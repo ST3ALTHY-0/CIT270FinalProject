@@ -12,7 +12,13 @@ public class MediumGame extends Game{
         initializeBoardWithCards();
     }
 
-
+    @Override
+    protected void isGameOver() {
+        if (Card.numOfFaceUpCards == 20) {
+            // TODO: send to end game sceen(that shows score, asks if you want to upload
+            // TODO: score), which will then send you back to menu, after you click 'ok'
+        }
+    }
   
     
 }

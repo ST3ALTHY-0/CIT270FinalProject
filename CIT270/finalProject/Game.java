@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 
-public class Game extends JPanel {
+public abstract class Game extends JPanel {
     protected GameGUI flip;
     protected GridLayout gridLayout;
     protected int rows;
@@ -16,6 +16,9 @@ public class Game extends JPanel {
     protected ArrayList<Component> boardArrayList;
     protected int score; //TODO: score is unimplemented for now, can maybe make score based on gameType, like
                          //TODO: you get more points per card match in HardGame than in EasyGame
+                         //TODO: and make it so you get more points if you take less time to finish the
+                         //TODO: game, and also more points for the less amount of card flips it takes you to
+                         //TODO: finish the game.
     protected int delay;
 
     public Game(String title, GameGUI flip, int rows, int columns) {
@@ -77,6 +80,7 @@ public class Game extends JPanel {
     // where you can see the cards for some time before they are they flipped back
     // face down
     protected void waitIfNoMatch(Card card1, Card card2) {
+        disableAllCards();
         Timer timer = new Timer(delay, new ActionListener() {// had to look up some information about Timers and how to
                                                              // add actionListener to them
             @Override
@@ -118,18 +122,6 @@ public class Game extends JPanel {
     }
 
     // checks if all cards are face up, if they all are then Game is over
-    protected void isGameOver() {
-        boolean isGameOver = true;
-        for (Component card : boardArrayList) {
-            if (!((Card) card).isFaceUp) {
-                isGameOver = false;
-            }
-        }
-        if (isGameOver) {
-            flip.clearPanel();
-            flip.toGameMenu(flip); //TODO: should probably make this send you to end game screen where you can see your
-                                   //TODO: score and then click 'ok' and go back to the menu
-        }
-    }
+    protected abstract void isGameOver();
 
 }

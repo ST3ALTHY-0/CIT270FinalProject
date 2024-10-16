@@ -11,16 +11,15 @@ public class Card extends JButton implements ActionListener {
     protected static Icon clickedIcon;
     protected static Card clickedCard;
     protected Game game;
+    protected static int numOfFaceUpCards;
 
     public Card(String imagePath, Game game) {
         icon = ImageCache.getImage(imagePath);
-        setIcon(null);
+        setIcon(null);//this sets the face down icon
         isFaceUp = false;
         this.game = game;
-        setDisabledIcon(icon);
+        setDisabledIcon(icon);//this sets the face up icon
         addActionListener(this);
-        //revalidate();
-        //repaint();
     }
 
     // click one card
@@ -38,19 +37,32 @@ public class Card extends JButton implements ActionListener {
             clickedCard = this;
             clickedIcon = this.icon;
         } else {// if second card is selected
-            if (clickedIcon.equals(this.icon)) {// if the clicked card in previous turn equals the card clicked this
+            if (clickedIcon.equals(this.icon)) {// if the clicked card icon in previous turn equals the card clicked icon this
                                                 // turn
                 clickedCard.setEnabled(false);
                 setEnabled(false);
                 isFaceUp = true;
                 clickedCard.isFaceUp = true;
-                game.isGameOver();
+                numOfFaceUpCards += 2;
+                checkIfGameIsOver();
             } else {//else if the 2 clicked cards don't match
-                game.disableAllCards();
                 game.waitIfNoMatch(clickedCard, this);
             }
         }
         actionPerformedCounter++;
+    }
+
+    private void checkIfGameIsOver(){
+        if(game instanceof EasyGame){
+            EasyGame easyGame = (EasyGame) game;
+            easyGame.isGameOver();
+        }else if (game instanceof MediumGame){
+            MediumGame mediumGame = (MediumGame) game;
+            mediumGame.isGameOver();
+        }else if(game instanceof HardGame){
+            HardGame hardGame = (HardGame) game;
+            hardGame.isGameOver();
+        }
     }
 
     public void setFaceUp(boolean isFaceUp) {
