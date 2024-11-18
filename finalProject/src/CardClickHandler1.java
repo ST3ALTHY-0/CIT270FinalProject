@@ -4,8 +4,9 @@ package finalProject.src;
 public class CardClickHandler1 {
     private GameManager game;
 
-    public CardClickHandler1(GameManager game) {
+    public CardClickHandler1(GameManager game, Card card) {
         this.game = game;
+        handleCardClick(card);
     }
 
     public void handleCardClick(Card card) {
@@ -35,6 +36,7 @@ public class CardClickHandler1 {
             game.waitIfNoMatch(game.getClickedCard(), card);
         }
     }
+
 
     private boolean isMatch(Card card) {
         return game.getClickedIcon().equals(card.getIcony());

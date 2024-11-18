@@ -12,11 +12,11 @@ public class Card extends JButton {
 
     public Card(File imagePath, GameManager game) {
         this.game = game;
-        icony = ImageCache.getImage(imagePath);
-        backIcon = ImageCache.getImage(ImageCache.getImagePathArrayElement(8)); 
+        icony = ImageCache.getImageIcon(imagePath);
+        //System.out.println(icony);
+        backIcon = ImageCache.getImageIcon(ImageCache.getImageFile("back", "jpg")); 
         setFaceUp(false);
         setIcon(backIcon);
-        //setDisabledSelectedIcon(backIcon);
         setDisabledIcon(icony);
         //addActionListener(this);
         addActionListener(e -> game.new CardClickHandler(this));

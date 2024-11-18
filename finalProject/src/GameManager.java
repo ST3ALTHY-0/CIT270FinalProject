@@ -6,30 +6,37 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 
-public abstract class GameManager {
+public abstract class GameManager {// doesnt really need to be abstract as of now because isGameOver can be taken
+                                   // care of exclusively in this class
     protected GameGUI flip;
-    protected int score; // TODO: score is unimplemented for now, can maybe make score based on gameType,
-                         // like
-                         // TODO: you get more points per card match in HardGame than in EasyGame
-                         // TODO: and make it so you get more points if you take less time to finish the
-                         // TODO: game, and also more points for the less amount of card flips it takes
-                         // TODO: you to finish the game.
-    protected int delay;
+    protected Score score; // TODO: score is unimplemented for now, can maybe make score based on gameType,
+                           // like
+                           // TODO: you get more points per card match in HardGame than in EasyGame
+                           // TODO: and make it so you get more points if you take less time to finish the
+                           // TODO: game, and also more points for the less amount of card flips it takes
+                           // TODO: you to finish the game.
+    private int delay;
     private int numOfFaceUpCards;
     private Card clickedCard;
     private Icon clickedIcon;
     private int actionPerformedCounter;
-    private GameInitialization init;
+    private GameBoardInitialization init;
 
     public GameManager(String title, GameGUI flip, int rows, int columns, int delay) {
         this.flip = flip;
         this.delay = delay;
-        init = new GameInitialization(title, flip, rows, columns, this);
-        saveData();// TODO: remove later, should go in HighScores class when created
+        init = new GameBoardInitialization(title, flip, rows, columns, this);
+        startTrackingScore(this);
+        // saveData();// TODO: remove later, should go in HighScores class when created
     }
 
-    public GameInitialization getInit() {
+    public GameBoardInitialization getInit() {
         return init;
+    }
+
+    public void startTrackingScore(GameManager game) {
+        score = new Score(game);
+        score.startGame();
     }
 
     // this method turns 2 selected cards face down after a set time 'delay'
@@ -74,25 +81,36 @@ public abstract class GameManager {
         }
     }
 
-    abstract void isGameOver();
+    public void isGameOver() {
+        System.out.println("Gammeee over");
+        System.out.println(getNumOfFaceUpCards());
+        System.out.println(init.getBoardArrayList().size());
 
-    //just a different way of checking if game is over, idk if we should use this or the abstract method
-    public void gameOver(){
-        if(init.getBoardArrayList().size() == getNumOfFaceUpCards()){
-            System.out.println("Game Over");
+        if (getNumOfFaceUpCards() == init.getBoardArrayList().size()) {
+            gameOver();
+            System.out.println("Gammeee over");
         }
     }
 
-    public void sendToEndGameScreen(){
-        //TODO
+    // just a different way of checking if game is over, idk if we should use this
+    // or the abstract method
+    public void gameOver() {
+        // if(init.getBoardArrayList().size() == getNumOfFaceUpCards()){
+        // System.out.println("Game Over");
+        // }
+        // TODO: send to endGame screen
+        score.endGame();//score is null
+        score.doMathForScore();
+        cleanup();
+        flip.clearPanel();
+        flip.toEndGame(flip);
     }
 
-    public int getScore() {
-        return score;
-    }
+    public void cleanup() {
 
-    public void setScore(int score) {
-        this.score = score;
+        init = null;
+        clickedCard = null;
+        clickedIcon = null;
     }
 
     // this method will create a new Data Obj, TODO: is more appropiate for
@@ -148,8 +166,8 @@ public abstract class GameManager {
         card.setCardMatched();
     }
 
-    public class CardClickHandler {
-        public CardClickHandler(Card card){
+    class CardClickHandler {
+        public CardClickHandler(Card card) {
             handleCardClick(card);
         }
 
@@ -174,9 +192,13 @@ public abstract class GameManager {
 
         private void handleSecondCardClick(Card card) {
             if (isMatch(card)) {
+                if (card instanceof BombCard) {
+                    gameOver();
+                    return;
+                }
                 markCardsAsMatched(card);
                 isGameOver();
-                gameOver();
+                // gameOver();
             } else {
                 waitIfNoMatch(getClickedCard(), card);
             }

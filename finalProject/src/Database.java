@@ -273,7 +273,7 @@ public class Database{
                     if (soup) {
                         timeStamp = rs.getLong("timeStamp"); // Slight difference in how data is stored remotely vs
                                                              // locally means we need to retrieve data slightly
-                                                             // differently
+                                                             // differently   TODO: this is bad and should be redesigned
                     } else {
                         timeStamp = rs.getTimestamp("timeStamp").getTime();
                     }
