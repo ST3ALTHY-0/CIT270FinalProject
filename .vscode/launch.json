@@ -4,7 +4,6 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
             "type": "java",
             "name": "Current File",
@@ -13,38 +12,10 @@
         },
         {
             "type": "java",
-            "name": "Driver",
-            "request": "launch",
-            "mainClass": "Driver",
-            "projectName": "CIT270_3a7c3217"
-        },
-        {
-            "type": "java",
-            "name": "ButtonTest",
-            "request": "launch",
-            "mainClass": "extraWork.ButtonTest",
-            "projectName": "CIT270_3a7c3217"
-        },
-        {
-            "type": "java",
-            "name": "Test",
-            "request": "launch",
-            "mainClass": "extraWork.Test",
-            "projectName": "CIT270_3a7c3217"
-        },
-        {
-            "type": "java",
             "name": "GameGUI",
             "request": "launch",
-            "mainClass": "finalProject.GameGUI",
-            "projectName": "CIT270_3a7c3217"
-        },
-        {
-            "type": "java",
-            "name": "GameGUI",
-            "request": "launch",
-            "mainClass": "finalProject.GameGUI",  // Replace with your main class path
-            "vmArgs": "-cp finalProject/lib/sqlite-jdbc-3.47.0.0.jar"
+            "mainClass": "src.GameGUI",
+            "projectName": "finalProject_813a0dbb"
         }
     ]
 }
