@@ -1,9 +1,5 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "finalProject/lib/sqlite-jdbc-3.47.0.0.jar",
-        "finalProject/lib/mysql-connector-j-9.1.0.jar",
-        "finalProject/lib/java-dotenv-5.2.2.jar",
-        "finalProject/lib/kotlin-stdlib-2.0.21.jar"
+        "lib/**/*.jar"
     ]
 }
