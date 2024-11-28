@@ -5,7 +5,7 @@ package src;
 public class Score {
 
     private int score;
-    private byte gameDifficultyScoreMultiplier;
+    private int gameDifficultyScoreMultiplier;
     private long startTime;
     private long endTime;
     private static final int BASE_SCORE = 1000;
@@ -24,18 +24,19 @@ public class Score {
         endTime = System.currentTimeMillis();
     }
 
-    public long getElapsedTime() {
+    private long getElapsedTime() {
         return endTime - startTime;
     }
 
     public void doMathForScore(){
         long elapsedTime = getElapsedTime();
+        //*math for calculations was looked up*
         double timeFactor = (double) elapsedTime / TIME_FACTOR;
         int calculatedScore = (int) (BASE_SCORE / (1 + timeFactor));
         score = calculatedScore * gameDifficultyScoreMultiplier;
         }
 
-    public byte setGameDifficultyScoreMultiplier(GameBoardInitialization init){
+    private int setGameDifficultyScoreMultiplier(GameBoardInitialization init){
         if (init instanceof EasyGame){
             return 1;
         }else if (init instanceof MediumGame){
@@ -45,11 +46,18 @@ public class Score {
         }
     }
 
+    public String getGameType(){
+        if(gameDifficultyScoreMultiplier == 1 ){
+            return "Easy";
+        }else if (gameDifficultyScoreMultiplier == 2){
+            return "Medium";
+        }else{
+            return "Hard";
+        }
+    }
+
     public int getScore(){
         return score;
     }
 
-    public void setScore(int score){
-        this.score = score;
-    }
 }

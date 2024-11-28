@@ -20,7 +20,7 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
 
     public GameMenu(GameGUI flip) {
         this.flip = flip;
-        initializeComponents();
+        setUpAndAddComponents();
         if (RunChecker.createCheckFile()) {
             toInfoPanel();
         } else {
@@ -28,11 +28,11 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
         }
     }
 
-    private void initializeComponents(){
+    private void setUpAndAddComponents(){
         initializeGridBagLayout(this);
-        initButtons();
+        initComponents();
         buttonBoxPanel = new ButtonBox();
-        addButtons();
+        addComponents();
         intro = new IntroScreen();
     }
 
@@ -55,8 +55,9 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
         repaint();
     }
 
-
-    private void initButtons() {
+    @Override
+    public void initComponents() {
+        //could make the text, or really any button properties like color, a constant and have them defined at the top of the file
         easyButton = new JButton("Easy");
         mediumButton = new JButton("Medium");
         hardButton = new JButton("Hard");
@@ -74,20 +75,19 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-         super.paintComponent(g);
-        if (backgroundImage != null) {
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        }
+        super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        
     }
 
     @Override
-    public void addButtons() {
+    public void addComponents() {
         buttonBoxPanel.addButtons();
     }
 
     class ButtonBox extends JPanel {
         public void addButtons(){
-            initializeButtonPanel(this, easyButton, mediumButton, hardButton);
+            initializeCenteredPanel(this, easyButton, mediumButton, hardButton);
             add(Box.createVerticalGlue());
             add(Box.createVerticalStrut(20));
             add(infoButton);

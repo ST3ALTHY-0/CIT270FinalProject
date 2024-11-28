@@ -22,6 +22,12 @@ public class GameBoardInitialization extends JPanel {
         initializeBoardPanel();
     }
 
+    //sort of default addCardsToGame Method that will be overridden by any subClass that wants to create special types of cards
+    public void addCardsToGame(){
+        createAndAddCardsToArrayList(rows * columns);
+        shuffleCards();
+    }
+
     public ArrayList<Component> getCardArrayList() {
         return cardArrayList;
     }
@@ -58,7 +64,7 @@ public class GameBoardInitialization extends JPanel {
                 createSetOfCards(i / 2);
             }
         }
-        //separate the cards that need to be matched to win and cards that need to be left face down to win
+        //separate the cards that need to be matched to win and all cards
         winConditionCardsList = new ArrayList<>(cardArrayList);
     }
 
@@ -73,10 +79,7 @@ public class GameBoardInitialization extends JPanel {
         cardArrayList.add(new BombCard(game));
     }
 
-    public void addCardsToGame(){
-        createAndAddCardsToArrayList(rows * columns);
-        shuffleCards();
-    }
+    
 
     public void createAndAddBombCards(int amount) {
         for (int i = 0; i < amount; i++) {

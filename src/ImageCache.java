@@ -24,8 +24,7 @@ public class ImageCache {
     }
 
     // this method preloads sprites so that there is not a freeze when loading into
-    // a
-    // game
+    // a game
     public static void preloadImages() {
         addFileNamesToArrayList();
         ImageIcon resizedImageIcon; 

@@ -17,12 +17,11 @@ import java.nio.file.Paths;
 
 public class Database {
     private Connection connection;
-    
     private boolean soup = true;// controls if DB uses remote db or local db in the db directory(tr ue = local :
                                 // false = remote)
 
     public Database(boolean isUsingLocalDB) {
-         soup = isUsingLocalDB;
+        soup = isUsingLocalDB;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             if (soup) {
@@ -32,42 +31,22 @@ public class Database {
             }
             // System.out.println(connection.toString());
             // System.out.println("Here");
-
         } catch (ClassNotFoundException e) {
             System.out.println("JDBC Driver not found.");
         }
     }
 
-    // public void deleteAllDataFromScoresRemote() {
-    // if (soup) {
-    // System.out.println("This operation is only for remote databases.");
-    // return;
-    // }
-
-    // String deleteScoresData = "DELETE FROM Scores";
-
-    // try (Statement stmt = connection.createStatement()) {
-    // connection.setAutoCommit(false); // Start transaction
-    // stmt.execute(deleteScoresData);
-    // connection.commit(); // Commit transaction
-    // System.out.println("All data has been deleted from Scores table
-    // successfully.");
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // System.out.println("Error deleting data from Scores table: " +
-    // e.getMessage());
-    // rollbackTransaction();
-    // }
-    // }
-
     public void setSoup(boolean soup) {
         this.soup = soup;
     }
 
-    private void getRemoteDBConnection() {
+    public boolean getSoup() {
+        return soup;
+    }
 
+    void getRemoteDBConnection() {
         Dotenv dotenv = Dotenv.configure()
-                .directory(Paths.get("./private").toString()) // TODO
+                .directory(Paths.get("./private").toString())
                 .filename("cred.env")
                 .load();
         try {
@@ -75,7 +54,6 @@ public class Database {
                     dotenv.get("DB_PASSWORD"));
             connection.setAutoCommit(false); // had problems with autoCommit so turned it off
             System.out.println("Remote Database connection established.");
-            return;
         } catch (Exception e) {
             System.out.println("Remote Database connection failed to established.");
             // getRemoteDBConnection();//maybe dont do this
@@ -83,7 +61,7 @@ public class Database {
 
     }
 
-    private void getLocalDBConnection() {
+    void getLocalDBConnection() {
         try {
             connection = DriverManager.getConnection(SQLiteStatements.LOCAL_DB_URL.getSql());
             connection.setAutoCommit(false); // had problems with autoCommit so turned it off
@@ -117,11 +95,9 @@ public class Database {
 
     private void rollbackTransaction() {
         try {
-            if (connection != null && !connection.isClosed()) {
-                connection.rollback();
-                // System.out.println("Transaction rolled back.");
-            }
-        } catch (SQLException e) {
+            connection.rollback();
+            // System.out.println("Transaction rolled back.");
+        } catch (Exception e) {
             // e.printStackTrace();
             // System.out.println("Failed to rollback transaction.");
         }
@@ -164,7 +140,6 @@ public class Database {
                 + ");";
 
         try (Statement stmt = connection.createStatement()) {
-            connection.setAutoCommit(false); // Start transaction
             stmt.execute(dropTable);
             stmt.execute(createTable);
             connection.commit(); // Commit transaction
@@ -182,7 +157,6 @@ public class Database {
         String dropScoresTable = "DROP TABLE IF EXISTS Scores";
 
         try (Statement stmt = connection.createStatement()) {
-            connection.setAutoCommit(false); // Start transaction
             stmt.execute(dropUsersTable);
             stmt.execute(dropGamesTable);
             stmt.execute(dropScoresTable);
@@ -202,11 +176,10 @@ public class Database {
         String deleteScoresData = "DELETE FROM Scores";
 
         try (Statement stmt = connection.createStatement()) {
-            connection.setAutoCommit(false); // Start transaction
             stmt.execute(deleteUsersData);
             stmt.execute(deleteGamesData);
             stmt.execute(deleteScoresData);
-            connection.commit(); // Commit transaction
+            connection.commit();
             // System.out.println("All data has been deleted from tables successfully.");
         } catch (SQLException e) {
             // e.printStackTrace();
@@ -222,7 +195,7 @@ public class Database {
             stmt.execute(SQLiteStatements.CREATE_USERS_TABLE.getSql());
             stmt.execute(SQLiteStatements.CREATE_GAMES_TABLE.getSql());
             stmt.execute(SQLiteStatements.CREATE_SCORES_TABLE.getSql());
-            connection.commit(); // Commit transaction
+            connection.commit();
             System.out.println("Tables have been created successfully.");
         } catch (SQLException e) {
             // e.printStackTrace();
@@ -238,7 +211,7 @@ public class Database {
         try (PreparedStatement sqlStatement = connection.prepareStatement(sql)) {
             sqlStatement.setString(1, data.getName());
             sqlStatement.executeUpdate();
-            connection.commit(); // Commit transaction
+            connection.commit();
             System.out.println("User inserted.");
         } catch (Exception e) {
             // e.printStackTrace();
@@ -317,7 +290,8 @@ public class Database {
                     if (soup) {
                         timeStamp = rs.getLong("timeStamp"); // Slight difference in how data is stored remotely vs
                                                              // locally means we need to retrieve data slightly
-                                                             // differently TODO: this is bad and should be redesigned
+                                                             // differently TODO: this is stupid and should be
+                                                             // redesigned
                     } else {
                         timeStamp = rs.getTimestamp("timeStamp").getTime();
                     }
@@ -335,10 +309,11 @@ public class Database {
         for (Data data : dataList) {
             System.out.println(data.getName() + " : " + data.getScore());
         }
-
         return dataList;
     }
 
+    // returns the correct string of sql based on if soup is true or false (If we
+    // are using remote[MYSQL] or local[SQLite] db)
     private String getSQLStatement(String SQLite, String MySQL) {
         if (soup) {
             return SQLite;
