@@ -8,10 +8,11 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
     protected static final int DEFAULT_HEIGHT = 800;
     private JPanel mainPanel;
     static Database db; // is default so that only package classes have access
+    private static boolean useLocalDB = true;
 
     public GameGUI() {
         ImageCache.preloadImages();
-        setupDB(false);
+        setupDB(useLocalDB);
         initializeFrame();
     }
 
