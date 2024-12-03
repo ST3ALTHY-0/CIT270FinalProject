@@ -56,9 +56,14 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
 
         toEndGame(this, null);
     }
-
+    
     // TODO: add class and method for highscore screen
-
+    public void toHighScoreScreen(GameGUI flip) {
+    	HighScore highScoreScreen = new HighScore(flip);
+    	
+    }
+    
+    
     public void toGameMenu(GameGUI flip) {
         clearPanel();
         GameMenu gameMenuScreen = new GameMenu(flip);

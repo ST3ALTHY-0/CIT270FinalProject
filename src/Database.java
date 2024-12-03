@@ -205,7 +205,7 @@ public class Database {
     }
 
     public void insertDataIntoUsers(Data data) {
-        String sql = getSQLStatement(SQLiteStatements.INSERT_INTO_USERS.getSql(),
+        String sql = m(SQLiteStatements.INSERT_INTO_USERS.getSql(),
                 MySQLStatements.INSERT_INTO_USERS.getSql());
 
         try (PreparedStatement sqlStatement = connection.prepareStatement(sql)) {
