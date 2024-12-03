@@ -1,5 +1,6 @@
 package src;
 
+
 import javax.swing.*;
 
 //This class need implemented so that on main panel you see a button that will lead you to a screen with high scores displayed
@@ -18,7 +19,45 @@ public class HighScore extends JPanel implements CenterButtonPanel{
         this.flip = flip;
         this.score = score;
         setUpAndAddComponents();
+=======
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+
+import java.awt.event.ActionListener;
+
+import javax.swing.CellEditor;
+
+
+import javax.swing.JPanel;
+import javax.swing.JTable;
+
+import src.GameMenu.ButtonBox;
+import src.GameMenu.IntroScreen;
+
+import java.io.File;
+
+//This class need implemented so that on main panel you see a button that will lead you to a screen with high scores displayed
+
+public class HighScore extends JPanel implements CenterButtonPanel, CellEditor{
+	
+	private static final int SCORE_DEFAULT_WIDTH = 800;
+    private static final int SCORE_DEFAULT_HEIGHT = 800;
+    
+    public void HighScoreTable() {
+    	private JTable highScore = new JTable();
+    	
+    	highScore.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT); 
+    	highScore.setVisible(true);                       
+    	highScore.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    	highScore.setResizable(false); 
+    	highScore.isEditable(true);
+
     }
+    private model highScoreTableModel = new model();
+    	
+    GameGUI.db.selectDataFromScores(10);
+
 
     private void setUpAndAddComponents(){
         initializeGridBagLayout(this);//could not use this and the components will be centered but on the top of the panel instead of the true center
@@ -53,11 +92,68 @@ public class HighScore extends JPanel implements CenterButtonPanel{
     private void initHighScoreTable(){
         //init the JTable with the highScore data using the 'GameGUI.db.selectDataFromScores(10);' method
 
-    }
+
+
 
     private void setData(){
         data = new Data(score.getScore() , score.getGameType(), name);
     }
+
+
+    private void initializeComponents(){   
+        initializeGridBagLayout(this);       
+        initButtons();                       
+        buttonBoxPanel = new ButtonBox();    
+        addButtons();                              
+    }                                    
+    
+    
+    
     
 
-}
+    
+
+            
+            
+    
+            
+            
+            
+            
+            
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
