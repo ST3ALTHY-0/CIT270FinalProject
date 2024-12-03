@@ -11,7 +11,7 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
 
     public GameGUI() {
         ImageCache.preloadImages();
-        setupDB(true);// TODO: Move the call to the method to HighScore Screen Later
+        setupDB(false);
         initializeFrame();
     }
 
@@ -20,7 +20,8 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
     // connect before we allow the user to click the buttons on screen
     //we also make the method package-private, so there is no access modifier
     void setupDB(boolean isUsingLocalDB) {
-        new Thread(() -> db = new Database(isUsingLocalDB)).start();//might need to be careful with synchronization/race cases doing this
+        db = new Database(isUsingLocalDB);
+        //new Thread(() -> db = new Database(isUsingLocalDB)).start();//might need to be careful with synchronization/race cases doing this
     }
 
     void setupImages() {
@@ -37,7 +38,7 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
 
         // starts code by creating new GameGUI obj
         // this code is exactly the same as the above commented out code
-        // this line just uses a lambda in place of a anonymous class
+        // this line just uses a lambda in place of an anonymous class
         SwingUtilities.invokeLater(() -> new GameGUI());
 
     }
@@ -54,7 +55,7 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-        toEndGame(this, null);
+        toGameMenu(this);
     }
 
     // TODO: add class and method for highscore screen

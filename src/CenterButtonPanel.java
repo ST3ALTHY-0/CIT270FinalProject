@@ -11,10 +11,10 @@ import java.awt.*;
  */
 public interface CenterButtonPanel {
 
-    ImageIcon backgroundIcon = ImageCache.getImageIcon(ImageCache.getImageFile("Other", "trees", "jpg"));
-    Image backgroundImage = backgroundIcon.getImage();
+    ImageIcon BACKGROUND_ICON = ImageCache.getImageIcon(ImageCache.getImageFile("Other", "trees", "jpg"));
+    Image BACKGROUND_IMAGE = BACKGROUND_ICON.getImage();
 
-    // adds buttons to the center of a BoxLayout Panel and makes the panel
+    // adds buttons/components to the center of a BoxLayout Panel and makes the panel
     // transparent and then returns the panel. TODO: Maybe change JButton to Component
     default JPanel initializeCenteredPanel(JPanel panel, JComponent... buttons) {// JButton... allows for any amount of
                                                                             // JButtons to be passed through as args

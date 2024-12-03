@@ -1,6 +1,5 @@
 package src;
 public class HardGame extends GameBoardInitialization{
-    //TODO: add extra stuff here that will make the game more difficult
     private static final int DELAY = 1000;
 
     public HardGame(GameGUI flip, int rows, int columns) {

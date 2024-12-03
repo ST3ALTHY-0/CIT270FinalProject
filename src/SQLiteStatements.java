@@ -49,7 +49,7 @@ public enum SQLiteStatements {
         + " FOREIGN KEY (gameId) REFERENCES Games(id)\n"
         + ");"),
     SELECT_TABLE_FROM_DB("SELECT name FROM sqlite_master WHERE type='table' AND name=?"),
-    SELECT_DATA_FROM_SCORES("SELECT u.username, g.gameType, s.score, s.timeStamp FROM Scores AS s JOIN Users AS u ON s.userId = u.id JOIN Games AS g ON s.gameId = g.id LIMIT ?"),
+    SELECT_DATA_FROM_SCORES("SELECT u.username, g.gameType, s.score, s.timeStamp FROM Scores AS s JOIN Users AS u ON s.userId = u.id JOIN Games AS g ON s.gameId = g.id ORDER BY s.score DESC LIMIT ?"),
     INSERT_INTO_SCORES("INSERT INTO Scores(userId, gameId, score, timeStamp) VALUES(?, ?, ?, ?)"),
     INSERT_INTO_USERS("INSERT OR IGNORE INTO Users(username) VALUES(?)");
 

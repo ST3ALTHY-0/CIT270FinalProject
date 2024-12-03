@@ -15,15 +15,24 @@ import java.util.ArrayList;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.nio.file.Paths;
 
+    // also note that the remote db uses MYSQL (because this was the first remote db
+    // i found for free and it only offered MYSQL) and the local db uses SQLite
+    // this is because sqlite is just a whole lot easier to work with in simple
+    // java applications like this.
+    // The two DBMS require slightly different SQL syntax, and also for the local db
+    // we need to be able to create and setup the db, where as in the remote we just need
+    // to be able to insert and select data only.
+
 public class Database {
     private Connection connection;
     private boolean soup = true;// controls if DB uses remote db or local db in the db directory(tr ue = local :
                                 // false = remote)
 
+
+
     public Database(boolean isUsingLocalDB) {
         soup = isUsingLocalDB;
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             if (soup) {
                 getLocalDBConnection();
             } else {
@@ -31,8 +40,18 @@ public class Database {
             }
             // System.out.println(connection.toString());
             // System.out.println("Here");
-        } catch (ClassNotFoundException e) {
-            System.out.println("JDBC Driver not found.");
+        } catch (Exception e) {
+            // e.printStackTrace();
+        }
+    }
+
+    void swapDBConnection() {
+        closeConnection();
+        soup = !soup;
+        if (soup) {
+            getLocalDBConnection();
+        } else {
+            getRemoteDBConnection();
         }
     }
 
@@ -44,7 +63,7 @@ public class Database {
         return soup;
     }
 
-    void getRemoteDBConnection() {
+    private void getRemoteDBConnection() {
         Dotenv dotenv = Dotenv.configure()
                 .directory(Paths.get("./private").toString())
                 .filename("cred.env")
@@ -61,7 +80,7 @@ public class Database {
 
     }
 
-    void getLocalDBConnection() {
+    private void getLocalDBConnection() {
         try {
             connection = DriverManager.getConnection(SQLiteStatements.LOCAL_DB_URL.getSql());
             connection.setAutoCommit(false); // had problems with autoCommit so turned it off
@@ -104,7 +123,7 @@ public class Database {
     }
 
     // not used(only for testing)
-    public boolean doesTablesExist() {
+    private boolean doesTablesExist() {
         String[] tables = { "Users", "Games", "Scores" };
         for (String table : tables) {
             try (PreparedStatement pstmt = connection
@@ -127,7 +146,7 @@ public class Database {
     }
 
     // not used(only for testing)
-    public void recreateScoresTable() {
+    private void recreateScoresTable() {
         String dropTable = "DROP TABLE IF EXISTS Scores";
         String createTable = "CREATE TABLE Scores (\n"
                 + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
@@ -151,7 +170,7 @@ public class Database {
     }
 
     // not used(only for testing)
-    public void dropAllTables() {
+    private void dropAllTables() {
         String dropUsersTable = "DROP TABLE IF EXISTS Users";
         String dropGamesTable = "DROP TABLE IF EXISTS Games";
         String dropScoresTable = "DROP TABLE IF EXISTS Scores";
@@ -170,7 +189,7 @@ public class Database {
     }
 
     // not used(only for testing)
-    public void deleteAllDataFromTables() {
+    private void deleteAllDataFromTables() {
         String deleteUsersData = "DELETE FROM Users";
         String deleteGamesData = "DELETE FROM Games";
         String deleteScoresData = "DELETE FROM Scores";
@@ -189,7 +208,7 @@ public class Database {
     }
 
     // not used(only for testing)
-    public void createTables() {
+    private void createTables() {
 
         try (Statement stmt = connection.createStatement()) {
             stmt.execute(SQLiteStatements.CREATE_USERS_TABLE.getSql());
@@ -219,7 +238,7 @@ public class Database {
         }
     }
 
-    public void insertDataIntoGames() {
+    private void insertDataIntoGames() {
         String[] gameTypes = { "Easy", "Medium", "Hard" };
         try (PreparedStatement pstmt = connection.prepareStatement(SQLiteStatements.INSERT_INTO_GAMES.getSql())) {
             for (String gameType : gameTypes) {
@@ -287,28 +306,29 @@ public class Database {
                     String username = rs.getString("username");
                     String gameType = rs.getString("gameType");
                     int score = rs.getInt("score");
-                    if (soup) {
+                   // if (soup) {
                         timeStamp = rs.getLong("timeStamp"); // Slight difference in how data is stored remotely vs
                                                              // locally means we need to retrieve data slightly
                                                              // differently TODO: this is stupid and should be
                                                              // redesigned
-                    } else {
-                        timeStamp = rs.getTimestamp("timeStamp").getTime();
-                    }
+                   // } else {
+                   //     timeStamp = rs.getTimestamp("timeStamp").getTime();
+                   // }
                     Data data = new Data(username, gameType, score, timeStamp);
                     dataList.add(data);
                 } catch (SQLException e) {
-                    // System.out.println("Error parsing data row: " + e.getMessage());
+                     System.out.println("Error parsing data row: " + e.getMessage());
                 }
             }
         } catch (SQLException e) {
-            // System.out.println("Error selecting data: " + e.getMessage());
+             System.out.println("Error selecting data: " + e.getMessage());
         }
 
         // TODO: testing to show data in terminal/ remove later
-        for (Data data : dataList) {
-            System.out.println(data.getName() + " : " + data.getScore());
-        }
+        //System.out.println("hello");
+        // for (Data data : dataList) {
+        //     System.out.println(data.getName() + " : " + data.getScore());
+        // }
         return dataList;
     }
 

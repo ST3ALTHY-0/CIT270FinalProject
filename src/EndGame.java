@@ -39,7 +39,7 @@ public class EndGame extends JPanel implements CenterButtonPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(BACKGROUND_IMAGE, 0, 0, getWidth(), getHeight(), this);
 
     }
 }
