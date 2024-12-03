@@ -9,7 +9,7 @@ public class Card extends JButton {
     private boolean isFaceUp;
     private ImageIcon icony;
     private ImageIcon backIcon;
-// fetches the image from database
+
     public Card(File imagePath, GameManager game) {
         icony = ImageCache.getImageIcon(imagePath);
         backIcon = ImageCache.getImageIcon(ImageCache.getImageFile("CardSprites", "back", "jpg")); 

@@ -28,24 +28,18 @@ public class EndGame extends JPanel implements CenterButtonPanel {
     @Override
     public void initComponents() {
         menu = new JButton("To Menu");
-        addHighScore = new JButton("Add your score to high score leader board");
+        addHighScore = new JButton("Add your score to high score leader board.");
         exit = new JButton("Exit");
 
         menu.addActionListener(e -> flip.toGameMenu(flip));
-
         addHighScore.addActionListener(e -> flip.toHighScore(flip, score));
-
         exit.addActionListener(e -> System.exit(0));
     }
 
-    private Object HighScore() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(BACKGROUND_IMAGE, 0, 0, getWidth(), getHeight(), this);
 
     }
 }

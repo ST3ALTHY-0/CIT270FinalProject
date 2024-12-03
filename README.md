@@ -19,12 +19,10 @@ cd CIT270FinalProject
 ```bash
 ## Example command
 git clone https://github.com/ST3ALTHY-0/CIT270FinalProject.git
-
 ```
 
-
 ## How to Compile and Run
-You need to be in finalProject directory to ruin the code.
+You need to be in finalProject directory to run the code.
 
 ```bash
 ### Compile
@@ -45,4 +43,4 @@ TODO: explain what each of the functions inside each class do
 
 
 ## Project authors
-Luke Monroe, Jerin Fons, Cody CyberBatMan
+Luke Monroe, Jerin Gamagama, Cody CyberBatMan

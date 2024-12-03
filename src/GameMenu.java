@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class GameMenu extends JPanel implements CenterButtonPanel {
    
-    private static final int INTRO_PANEL_WIDTH = 400;
+    private static final int INTRO_PANEL_WIDTH = 500;
     private static final int INTRO_PANEL_HEIGHT = 200;
 
     private JButton easyButton;
@@ -76,7 +76,7 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(BACKGROUND_IMAGE, 0, 0, getWidth(), getHeight(), this);
         
     }
 
@@ -112,7 +112,8 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
 
             okButton = new JButton("OK");
             okButton.addActionListener(e -> toButtonBox());
-            info = new JLabel("Intro Screen: Give some info about the game here");
+            info = new JLabel();
+            info.setText("<html><body style='width:" + (INTRO_PANEL_WIDTH-125) +"px; text-align: center;'>Intro Screen: This is a memory match game. All you need to do is match the cards with the same picture. However, the higher the difficulty, the shorter the amount of time you can see the face-up cards, but you will also earn more score. There will also be an additional type of card added in the medium and hard difficulties. This type of card is a bombCard that has a picture of a bomb. If you match two bombCards, your game will end and you will earn a score of 0.</body></html>");
             add(info);
 
             JPanel buttonPanel = new JPanel();
