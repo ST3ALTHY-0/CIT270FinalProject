@@ -30,6 +30,7 @@ public class Database {
 
 
 
+
     public Database(boolean isUsingLocalDB) {
         soup = isUsingLocalDB;
         try {
@@ -63,21 +64,36 @@ public class Database {
         return soup;
     }
 
+    // private void getRemoteDBConnection() {
+    //     Dotenv dotenv = Dotenv.configure()
+    //             .directory(Paths.get("./private").toString())
+    //             .filename("cred.env")
+    //             .load();
+    //     try {
+    //         connection = DriverManager.getConnection(dotenv.get("DB_URL"), dotenv.get("DB_USER"),
+    //                 dotenv.get("DB_PASSWORD"));
+    //         connection.setAutoCommit(false); // had problems with autoCommit so turned it off
+    //         System.out.println("Remote Database connection established.");
+    //     } catch (Exception e) {
+    //         System.out.println("Remote Database connection failed to established.");
+    //         // getRemoteDBConnection();//maybe dont do this
+    //     }
+
+    // }
     private void getRemoteDBConnection() {
         Dotenv dotenv = Dotenv.configure()
                 .directory(Paths.get("./private").toString())
                 .filename("cred.env")
-                .load();
-        try {
-            connection = DriverManager.getConnection(dotenv.get("DB_URL"), dotenv.get("DB_USER"),
-                    dotenv.get("DB_PASSWORD"));
-            connection.setAutoCommit(false); // had problems with autoCommit so turned it off
-            System.out.println("Remote Database connection established.");
-        } catch (Exception e) {
-            System.out.println("Remote Database connection failed to established.");
-            // getRemoteDBConnection();//maybe dont do this
+                .load();     
+            try {
+                connection = DriverManager.getConnection(dotenv.get("DB_URL"), dotenv.get("DB_USER"),
+                        dotenv.get("DB_PASSWORD"));
+                connection.setAutoCommit(false); // had problems with autoCommit so turned it off
+                System.out.println("Remote Database connection established.");
+            } catch (SQLException e) {
+                System.out.println("Remote Database connection failed to establish.");
+                e.printStackTrace();      
         }
-
     }
 
     private void getLocalDBConnection() {
@@ -342,4 +358,3 @@ public class Database {
         }
     }
 }
-
