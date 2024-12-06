@@ -8,18 +8,14 @@ public class GameGUI extends JFrame {// could make it not extend JFrame by decla
     protected static final int DEFAULT_HEIGHT = 800;
     private JPanel mainPanel;
     static Database db; // is default so that only package classes have access
-    private static boolean useLocalDB = true;
+    private static final boolean isUsingLocalDB = true;
 
     public GameGUI() {
         ImageCache.preloadImages();
-        setupDB(useLocalDB);
+        setupDB(isUsingLocalDB);
         initializeFrame();
     }
 
-    // TODO: This method should likely be called in highScore screen class instead of here
-    // we start a new thread for this so that we dont need to wait for the db to
-    // connect before we allow the user to click the buttons on screen
-    //we also make the method package-private, so there is no access modifier
     void setupDB(boolean isUsingLocalDB) {
         db = new Database(isUsingLocalDB);
         //new Thread(() -> db = new Database(isUsingLocalDB)).start();//might need to be careful with synchronization/race cases doing this
