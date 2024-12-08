@@ -23,6 +23,15 @@ import java.nio.file.Paths;
     // we need to be able to create and setup the db, where as in the remote we just need
     // to be able to insert and select data only.
 
+    //NOTE: There is a bug with remote db, where the remote db goes inactive after ~15min of no activity, and then you try to get the connection for the first time
+    //since the db has gone inactive, the connection fails to establish. 
+    //To get pass this, you have to fail to get the remote db by running the program once, and then once the remote db is activated by the 
+    //failed connection you can run the program fine after that until once again the db goes to sleep.
+
+    //I tried to fix this bug by trying to get the connection, waiting some seconds and then trying to get the connection again,
+    //but this did not work, only completely stopping the program and running again ever fixed this. Im sure there is a fix to this, 
+    //I just dont know that much about 'java.sql'.
+
 public class Database {
     private Connection connection;
     private boolean soup = true;// controls if DB uses remote db or local db in the db directory(tr ue = local :
