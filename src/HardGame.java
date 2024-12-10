@@ -8,9 +8,9 @@ public class HardGame extends GameBoardInitialization{
     }
     
     @Override //would be best to throw an exception if the right amount of cards arnt created, but im not going to create my own exception right now
-    public void addCardsToGame(){
-        createAndAddCardsToArrayList(20);
-        createAndAddBombCards(4);
-        shuffleCards();
+    public final void addCardsToGame(){
+        super.createAndAddCardsToArrayList(20);
+        super.createAndAddBombCards(4);
+        super.shuffleCards();
     }
 }

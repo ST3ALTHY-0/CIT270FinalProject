@@ -1,10 +1,11 @@
 package src;
 
-import java.io.File;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.*;
 
-public class GameMenu extends JPanel implements CenterButtonPanel {
+public class GameMenu extends JPanel implements CenterComponentsOnJPanel {
    
     private static final int INTRO_PANEL_WIDTH = 500;
     private static final int INTRO_PANEL_HEIGHT = 200;
@@ -12,7 +13,7 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
     private JButton easyButton;
     private JButton mediumButton;
     private JButton hardButton;
-    private GameGUI flip;
+    private final GameGUI flip;
     private IntroScreen intro;
     private ButtonBox buttonBoxPanel;
     private JButton infoButton;
@@ -105,7 +106,7 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
             initializeIntroScreen();
         }
 
-        public void initializeIntroScreen() {
+        private void initializeIntroScreen() {
             setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
             setPreferredSize(new Dimension(INTRO_PANEL_WIDTH, INTRO_PANEL_HEIGHT));
             setLayout(new BorderLayout());
@@ -130,7 +131,7 @@ public class GameMenu extends JPanel implements CenterButtonPanel {
         public static boolean createCheckFile() {
             try {
                 return CHECK_FILE.createNewFile();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 //e.printStackTrace();
                 return false;
             }

@@ -5,6 +5,6 @@ public class EasyGame extends GameBoardInitialization{
 
     public EasyGame(GameGUI flip, int rows, int columns) {
         super("Easy Memory Match Card Game", flip, rows, columns, DELAY);
-        addCardsToGame();
+        super.addCardsToGame();
     }    
 }

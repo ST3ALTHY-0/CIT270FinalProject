@@ -7,16 +7,16 @@ import javax.swing.table.DefaultTableModel;//why this isnt included in above imp
 
 //This class need implemented so that on main panel you see a button that will lead you to a screen with high scores displayed
 
-public class HighScore extends JPanel implements CenterButtonPanel {
-    private GameGUI flip;
+public class HighScore extends JPanel implements CenterComponentsOnJPanel {
+    private final GameGUI flip;
     private Data data;
     private JTable highScoreTable;// for showing top 10 high scores
     private JToggleButton toggleButtonForDB;// for choosing local or remote db
     private JTextField nameField;// for entering the name that the user wants to associate with their highScore
     private JButton submitButton;
-    private Score score;// the score the player achieved when playing the game
+    private final Score score;// the score the player achieved when playing the game
     private Object[][] dataArray; // array for adding data to Table
-    private String[] JTableColumNames = { "Name", "Score", "GameType" };
+    private final String[] JTableColumNames = { "Name", "Score", "GameType" };
     private JPanel componentPanel;
     private JPanel componentPanel2;
     private JTextArea dbText;
@@ -46,6 +46,7 @@ public class HighScore extends JPanel implements CenterButtonPanel {
         }
     }
 
+    @Override
     public void initComponents() {
         // initialize the JButtons, JTable, and any other components you want here
         initializeGridBagLayout(this);
@@ -59,22 +60,22 @@ public class HighScore extends JPanel implements CenterButtonPanel {
         dbText = new JTextArea();
         dbText.setEditable(false);
         updateDBtext();
+
         scoreText = new JTextArea("Your score: " + String.valueOf(score.getScore()));
         scoreText.setEditable(false);
         scoreText.setPreferredSize(new Dimension(100, 20));
+
         homeButton = new JButton("To Menu");
         homeButton.addActionListener(e -> flip.toGameMenu(flip));
+
         initToggleButton();
         initTextField();
         initSubmitButton();
         initHighScoreTable();
     }
 
+    @Override
     public void addComponents() {
-        // add all components to the screen
-        // add(Box.createVerticalGlue());
-        // add(Box.createVerticalStrut(20));
-
         scoreText.setAlignmentY(Component.CENTER_ALIGNMENT);
         componentPanel.add(scoreText);
 
@@ -95,6 +96,11 @@ public class HighScore extends JPanel implements CenterButtonPanel {
         componentPanel2.add(Box.createVerticalStrut(20));
         submitButton.setAlignmentY(Component.CENTER_ALIGNMENT);
 
+        componentPanel2.add(homeButton);
+        componentPanel2.add(Box.createVerticalGlue());
+        componentPanel2.add(Box.createVerticalStrut(20));
+        homeButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+
         componentPanel.add(dbText);
         componentPanel.add(Box.createVerticalGlue());
         componentPanel.add(Box.createVerticalStrut(20));
@@ -105,9 +111,6 @@ public class HighScore extends JPanel implements CenterButtonPanel {
         initializeCenteredPanel(this, highScoreTable);
         add(Box.createVerticalGlue());
         add(Box.createVerticalStrut(20));
-        homeButton.setAlignmentY(Component.CENTER_ALIGNMENT);
-        add(homeButton);
-        
     }
 
     // this is a separate method from init Components bc initializing the table will
@@ -126,9 +129,10 @@ public class HighScore extends JPanel implements CenterButtonPanel {
         toggleButtonForDB = new JToggleButton("Toggle DB");
         toggleButtonForDB.addActionListener(e -> {
             GameGUI.db.swapDBConnection();
-            // initHighScoreTable();
+            
             getDataAndAddToArray();
             updateDBtext();
+
             repaint();
             revalidate();
         });
@@ -144,13 +148,9 @@ public class HighScore extends JPanel implements CenterButtonPanel {
         submitButton = new JButton("Submit score");
         submitButton.addActionListener(e -> {
             if (nameField.getText() != null && !nameField.getText().equals("") && !nameField.getText().equals("Enter your name here (must change to save)") && didSubmit == false) {               
-                 setAndSendData(nameField.getText());
+                setAndSendData(nameField.getText());
                 getDataAndAddToArray();
                 didSubmit = true;
-                //System.out.println("hey");
-            }else{
-                //System.out.println("nope");
-
             }
         });
     }
@@ -165,10 +165,7 @@ public class HighScore extends JPanel implements CenterButtonPanel {
             dataArray[index][2] = highScoresData.get(index).getGameType();
         }
         tableModel.setDataVector(dataArray, JTableColumNames);
-        // for (Object[] row : dataArray) {
-        // System.out.println("Name: " + row[0] + ", Score: " + row[1] + ", GameType: "
-        // + row[2]);
-        // }
+
         highScoreTable.repaint();
         highScoreTable.revalidate();
         repaint();

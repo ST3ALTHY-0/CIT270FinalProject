@@ -2,13 +2,13 @@ package src;
 
 import java.awt.*;
 import java.util.ArrayList;
-import javax.swing.JPanel;
 import java.util.Collections;
+import javax.swing.JPanel;
 
 public class GameBoardInitialization extends JPanel {
-    private GameManager game;
-    private int rows;
-    private int columns;
+    private final GameManager game;
+    private final int rows;
+    private final int columns;
     private ArrayList<Component> cardArrayList;
     private ArrayList<Component> winConditionCardsList;
 
@@ -41,7 +41,7 @@ public class GameBoardInitialization extends JPanel {
     }
 
     // sets up some basic info for the board
-    public void initializeBoardPanel() {
+    private void initializeBoardPanel() {
         setLayout(new GridLayout(rows, columns));
         setLocation((GameGUI.DEFAULT_WIDTH / 2), (GameGUI.DEFAULT_HEIGHT));
         setPreferredSize(new Dimension((GameGUI.DEFAULT_WIDTH - 50), (GameGUI.DEFAULT_HEIGHT - 50)));
