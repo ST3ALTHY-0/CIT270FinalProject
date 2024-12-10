@@ -8,9 +8,9 @@ public class MediumGame extends GameBoardInitialization{
     }
     
     @Override
-    public void addCardsToGame(){
-        createAndAddCardsToArrayList(16);
-        createAndAddBombCards(4);
-        shuffleCards();
+    public final void addCardsToGame(){
+        super.createAndAddCardsToArrayList(16);
+        super.createAndAddBombCards(4);
+        super.shuffleCards();
     }
 }

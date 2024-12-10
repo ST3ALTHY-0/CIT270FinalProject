@@ -1,4 +1,5 @@
 package src;
+//TODO: create restful api with spring boot that will handle the direct DB transactions and connect to it to this class
 
 //TODO: To make this class better A: split into multiple classes, like initialization and running db, B: replace the commented out System.out.println's with Log messages that go into Log file
 // Looked up some syntax related to java.sql

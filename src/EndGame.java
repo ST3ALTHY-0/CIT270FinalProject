@@ -1,18 +1,22 @@
 package src;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
-public class EndGame extends JPanel implements CenterButtonPanel {
+public class EndGame extends JPanel implements CenterComponentsOnJPanel {
     private JButton menu;
     private JButton addHighScore;
     private JButton exit;
-    private GameGUI flip;
-    private Score score;
+    private final GameGUI flip;
+    private final Score score;
 
     public EndGame(GameGUI flip, Score score) {
         this.flip = flip;
         this.score = score;
+        setupComponents();
+    }
+
+    private void setupComponents() {
         initializeGridBagLayout(this);
         initComponents();
         addComponents();

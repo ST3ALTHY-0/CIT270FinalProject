@@ -1,18 +1,16 @@
 package src;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.Timer;
 import java.util.Stack;
+import javax.swing.Timer;
 
 public class GameManager {
     protected GameGUI flip;
     protected Score score; 
-    private int delay;
+    private final int delay;
     private int actionPerformedCounter;
-    private GameBoardInitialization init;
-    private Stack<Card> cardStack;
+    private final GameBoardInitialization init;
+    private final Stack<Card> cardStack;
 
     public GameManager(GameGUI flip, int delay, GameBoardInitialization init) {
         this.flip = flip;
@@ -20,8 +18,6 @@ public class GameManager {
         this.init = init;
         cardStack = new Stack<>();
         startTrackingScore();
-        //db = new Database();//TODO: move this to HighScore Screen later
-        // saveData();//
     }
 
     protected Score getScoreForGame(){
@@ -39,13 +35,10 @@ public class GameManager {
     // face down
     protected void waitIfNoMatch(Card card1, Card card2) {
         disableAllCards(card1, card2);
-        Timer timer = new Timer(delay, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                card1.setFaceUp(false);
-                card2.setFaceUp(false);
-                enableAllCardsNotMatched();
-            }
+        Timer timer = new Timer(delay, (event) -> {
+            card1.setFaceUp(false);
+            card2.setFaceUp(false);
+            enableAllCardsNotMatched();
         });
         timer.setRepeats(false);
         timer.start();
@@ -62,6 +55,7 @@ public class GameManager {
                 }
                 cardy.setEnabled(false);
             }
+            
         }
     }
 
@@ -117,7 +111,7 @@ public class GameManager {
             handleCardClick(card);
         }
 
-        public void handleCardClick(Card card) {
+        private void handleCardClick(Card card) {
             card.setFaceUp(true);
             if (isFirstCardClick()) {
                 handleFirstCardClick(card);

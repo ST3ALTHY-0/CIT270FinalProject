@@ -1,17 +1,16 @@
 package src;
 
-import javax.swing.*;
-
 import java.awt.Image;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.*;
 
 //helper class to preload and retrieve images so the game runs without freezing
 public class ImageCache {
 
     // we create a hashmap here bc its a really quick data structure
-    private static HashMap<File, ImageIcon> imageCache = new HashMap<>();
+    private static final HashMap<File, ImageIcon> imageCache = new HashMap<>();
     private static ArrayList<File> imagePathArray;
 
     // this method retrieves an image from the cache or loads it if not present
