@@ -43,4 +43,4 @@ TODO: explain what each of the functions inside each class do
 
 
 ## Project authors
-Luke Monroe, Jerin Gamagama, Cody CyberBatMan
+Luke Monroe
